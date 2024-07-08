@@ -37,4 +37,12 @@ describe("StringCalculator", () => {
   test('should allow multiple custom delimiters with longer length', () => {
     expect(StringCalculator.add('//[***][%%%]\n1***2%%%3')).toBe(6);
   });
+
+  test('should throw an error for negative numbers', () => {
+    expect(() => StringCalculator.add('1,-2,3')).toThrow('Negatives not allowed: -2');
+  });
+
+  test('should show all negative numbers in the exception message', () => {
+    expect(() => StringCalculator.add('-1,-2,3')).toThrow('Negatives not allowed: -1, -2');
+  });
 });
