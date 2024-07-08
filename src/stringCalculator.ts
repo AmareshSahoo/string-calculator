@@ -35,22 +35,24 @@ export class StringCalculator {
     return this.calculateSum(numberArray);
   }
 
-  private static calculateSum(numberArray: string[]): number {
-    return numberArray.reduce((sum, num) => {
-      const parsedNum = parseInt(num);
-      return parsedNum <= 1000 ? sum + parsedNum : sum;
-    }, 0);
+  private static calculateSum(numbers: string[]): number {
+    return numbers.reduce((sum, num) => sum + this.parseNumber(num), 0);
   }
 
-  private static checkForNegatives(numberArray: string[]): void {
-    const negativeNumbers = numberArray.filter(num => parseInt(num) < 0);
-    if (negativeNumbers.length > 0) {
-      throw new Error(`Negatives not allowed: ${negativeNumbers.join(', ')}`);
+  private static checkForNegatives(numbers: string[]): void {
+    const negatives = numbers.filter(num => this.parseNumber(num) < 0);
+    if (negatives.length > 0) {
+      throw new Error(`Negatives not allowed: ${negatives.join(', ')}`);
     }
   }
 
   // Escape special characters
   private static escapeRegExp(str: string): string {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); 
+  }
+
+  private static parseNumber(num: string): number {
+    const parsed = parseInt(num);
+    return parsed <= 1000 ? parsed : 0; // Ignore numbers greater than 1000
   }
 }

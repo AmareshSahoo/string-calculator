@@ -45,4 +45,12 @@ describe("StringCalculator", () => {
   test('should show all negative numbers in the exception message', () => {
     expect(() => StringCalculator.add('-1,-2,3')).toThrow('Negatives not allowed: -1, -2');
   });
+
+  test('should ignore numbers greater than 1000', () => {
+    expect(StringCalculator.add('2,1001')).toBe(2);
+  });
+
+  test('should ignore numbers greater than 1000 with custom delimiter', () => {
+    expect(StringCalculator.add('//;\n2;1001')).toBe(2);
+  });
 });
